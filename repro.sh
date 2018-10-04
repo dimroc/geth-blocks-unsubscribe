@@ -27,9 +27,9 @@ exit_handler() {
 trap "exit_handler" EXIT SIGTERM SIGINT
 
 buildAndRunSubscriber() {
-  DIR=`mktemp`
-  go build -o "${DIR}blockingbuild" main.go
-  ${DIR}blockingbuild &
+  DIR=`mktemp -d`
+  go build -o "${DIR}/blockingbuild" main.go
+  ${DIR}/blockingbuild &
 }
 
 installGeth() {
