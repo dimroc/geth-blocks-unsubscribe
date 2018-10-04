@@ -11,9 +11,10 @@ main() {
   sleep 2
   printf -- "\033[34mmain.go is running.\033[0m\n"
 
+  printps
   printf -- "\033[34mSleeping for 5...\033[0m\n"
   sleep 5
-  printf -- "\033[34mSimultaneously kill all child processes...\033[0m\n"
+  printf -- "\033[34mSimultaneously kill all child processes. Check ps afterwards..\033[0m\n"
 }
 
 exit_handler() {
@@ -69,6 +70,11 @@ runGethnet() {
   ./gethnet &
   waitForResponse http://127.0.0.1:18545
   printf -- "\033[34mGeth is running.\033[0m\n"
+}
+
+printps() {
+  printf -- "\033[34mProcesses...\033[0m\n"
+  ps
 }
 
 main

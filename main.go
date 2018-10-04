@@ -7,6 +7,7 @@ import (
 	"math/big"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 
 	ethereum "github.com/ethereum/go-ethereum"
@@ -28,18 +29,35 @@ type EthSubscription interface {
 func main() {
 	eth := connectToEth()
 
+	var wg sync.WaitGroup
 	logs := make(chan types.Log)
+	heads := make(chan types.Header)
 	done := make(chan struct{})
 
-	go listen(logs, done)
-	sub := subscribeToLogs(eth, logs, filterQueryFor(nil))
+	wg.Add(1)
+	go listen(logs, heads, done, &wg)
+	headsSub := subscribeToHeads(eth, heads)
+	logsSub := subscribeToLogs(eth, logs, filterQueryFor(nil))
 
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	<-sigs
 
-	sub.Unsubscribe() // When called simultaneously with eth node shutdown, blocks indefinitely.
-	close(done)       // In successful repro, this never gets called.
+	headsSub.Unsubscribe() // When called simultaneously with eth node shutdown, blocks indefinitely.
+	logsSub.Unsubscribe()  // When called simultaneously with eth node shutdown, blocks indefinitely.
+	close(done)            // In successful repro, this never gets called.
+	wg.Wait()              // In successful repro, this never gets called.
+	close(logs)
+	close(heads)
+}
+
+func subscribeToHeads(eth *rpc.Client, channel chan<- types.Header) EthSubscription {
+	ctx := context.Background()
+	sub, err := eth.EthSubscribe(ctx, channel, "newHeads")
+	if err != nil {
+		log.Panic(err)
+	}
+	return sub
 }
 
 func subscribeToLogs(eth *rpc.Client, channel chan<- types.Log, q ethereum.FilterQuery) EthSubscription {
@@ -51,7 +69,8 @@ func subscribeToLogs(eth *rpc.Client, channel chan<- types.Log, q ethereum.Filte
 	return sub
 }
 
-func listen(logs chan types.Log, done chan struct{}) {
+func listen(logs chan types.Log, heads chan types.Header, done chan struct{}, wg *sync.WaitGroup) {
+	defer wg.Done()
 	for {
 		select {
 		case <-done:
@@ -59,6 +78,8 @@ func listen(logs chan types.Log, done chan struct{}) {
 			return
 		case l := <-logs:
 			fmt.Println("Received log:", l)
+		case h := <-heads:
+			fmt.Println("Received header:", h.Number.String())
 		}
 	}
 }
