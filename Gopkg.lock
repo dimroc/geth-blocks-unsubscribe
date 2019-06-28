@@ -2,6 +2,25 @@
 
 
 [[projects]]
+  digest = "1:d99d7505ed692718d6b2d0e5ed3aac6c0a0bca4f8892c8989776dcefdb529dc7"
+  name = "github.com/allegro/bigcache"
+  packages = [
+    ".",
+    "queue",
+  ]
+  pruneopts = "UT"
+  revision = "69ea0af04088faa57adb9ac683934277141e92a5"
+  version = "v2.0.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:7d191fd0c54ff370eaf6116a14dafe2a328df487baea280699f597aae858d00d"
+  name = "github.com/aristanetworks/goarista"
+  packages = ["monotime"]
+  pruneopts = "UT"
+  revision = "8e7d5b18fe7ad671e07097d5445dbc70422663b2"
+
+[[projects]]
   branch = "master"
   digest = "1:c0decf632843204d2b8781de7b26e7038584e2dcccc7e2f401e88ae85b1df2b7"
   name = "github.com/btcsuite/btcd"
@@ -18,18 +37,18 @@
   version = "v1.7.1"
 
 [[projects]]
-  digest = "1:c24d17ef5d37ae7215811cf1cade45822faa232d6bcfbadff30bbeba52225a98"
+  digest = "1:56058c72bf5072f955ec109a1765aeed9a30f5ec254cfeaea6c4c6861f7c0d2f"
   name = "github.com/ethereum/go-ethereum"
   packages = [
     ".",
     "common",
     "common/hexutil",
     "common/math",
+    "common/mclock",
     "common/prque",
     "core/types",
     "crypto",
     "crypto/secp256k1",
-    "crypto/sha3",
     "ethdb",
     "log",
     "metrics",
@@ -40,8 +59,8 @@
     "trie",
   ]
   pruneopts = "T"
-  revision = "477eb0933b9529f7deeccc233cc815fe34a8ea56"
-  version = "v1.8.16"
+  revision = "4bcc0a37ab70cb79b16893556cffdaad6974e7d8"
+  version = "v1.8.27"
 
 [[projects]]
   digest = "1:586ea76dbd0374d6fb649a91d70d652b7fe0ccffb8910a77468e7702e7901f3d"
@@ -90,11 +109,27 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:9c4fed825c10231651e81bf0ab2c12e3a6cc349dcc62a78f8d3a9dfb6744855e"
+  name = "golang.org/x/crypto"
+  packages = ["sha3"]
+  pruneopts = "UT"
+  revision = "cc06ce4a13d484c0101a9e92913248488a75786d"
+
+[[projects]]
+  branch = "master"
   digest = "1:7427036b6d926b3d1fa0773771820735b35554a98296f1074df440ee30a97296"
   name = "golang.org/x/net"
   packages = ["websocket"]
   pruneopts = "UT"
   revision = "f5e5bdd778241bfefa8627f7124c39cd6ad8d74f"
+
+[[projects]]
+  branch = "master"
+  digest = "1:9289797869517c73400e7b5a93beefbfc86e06f56e3ab03f38fb0d575e685277"
+  name = "golang.org/x/sys"
+  packages = ["cpu"]
+  pruneopts = "UT"
+  revision = "04f50cda93cbb67f2afa353c52f342100e80e625"
 
 [[projects]]
   branch = "v2"

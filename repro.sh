@@ -33,7 +33,7 @@ buildAndRunSubscriber() {
 }
 
 installGeth() {
-  printf -- "\033[34mInstalling geth...\033[0m\n"
+  printf -- "\033[34mInstalling geth 1.8.27...\033[0m\n"
   ethpkg=github.com/ethereum/go-ethereum
   ethpath=$GOPATH/src/$ethpkg
   if [ -d "$ethpath" ]; then
@@ -44,7 +44,7 @@ installGeth() {
     go get -d $ethpkg
     pushd "$ethpath" >/dev/null
   fi
-  git checkout v1.8.16 2>/dev/null
+  git checkout v1.8.27 2>/dev/null
   popd >/dev/null
   go install $ethpkg/cmd/geth
 }
