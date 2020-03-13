@@ -20,6 +20,7 @@ case "$1" in
   console)
     geth console --dev --mine --networkid 17 --wsorigins "*" --rpc --ws \
       --rpcapi "$RPCAPI" --rpccorsdomain "null" \
+      --allow-insecure-unlock \
       --rpcaddr 127.0.0.1 --rpcport 18545 --wsport 18546 --datadir $GETHNETDIR \
       --unlock "$ACCOUNT" \
       --ipcdisable \
@@ -29,6 +30,7 @@ case "$1" in
     geth --dev --mine --networkid 17 --wsorigins "*" --rpc --ws \
       --rpcapi "$RPCAPI" --rpccorsdomain "null" \
       --rpcaddr 127.0.0.1 --dev.period 2 --rpcport 18545 --wsport 18546 \
+      --allow-insecure-unlock \
       --datadir $GETHNETDIR \
       --unlock "$ACCOUNT" \
       --ipcdisable \
